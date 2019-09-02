@@ -9,22 +9,16 @@
     <div id="app">
         <div class="login-box">
             <div class="login-logo">
-                <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+                <a><b>Colegio Santafe</b></a>
             </div><!-- /.login-logo -->
 
         @if (count($errors) > 0)
             <div class="alert alert-danger">
-                <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                <strong>Whoops!</strong> Datos Incorrectos<br><br>
             </div>
         @endif
 
         <div class="login-box-body">
-        <p class="login-box-msg"> {{ trans('adminlte_lang::message.siginsession') }} </p>
         <form action="{{ url('/login') }}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group has-feedback">
@@ -44,31 +38,16 @@
                     </div>
                 </div><!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('adminlte_lang::message.buttonsign') }}</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
                 </div><!-- /.col -->
             </div>
         </form>
-
-        @include('adminlte::auth.partials.social_login')
-
-        <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
-        <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
 
     </div><!-- /.login-box-body -->
 
     </div><!-- /.login-box -->
     </div>
     @include('adminlte::layouts.partials.scripts_auth')
-
-    <script>
-        $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
-            });
-        });
-    </script>
 </body>
 
 @endsection

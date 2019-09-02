@@ -4,6 +4,7 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="/plugins/EasyAutocomplete/dist/easy-autocomplete.min.css">
 
 @section('htmlheader')
@@ -73,5 +74,13 @@ desired effect
     function baseUrl(url){
       return '{{url('')}}/' + url;
     }
+  </script>
+
+ 
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
   </script>
 </html>

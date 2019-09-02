@@ -13,10 +13,10 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Total", { role: "style" } ],
-        ["Bajo",{{$bajo}}, "#b87333"],
-        ["Basico",{{$basico}}, "silver"],
-        ["Alto",{{$alto}}, "gold"],
-        ["Superior",{{$superior}}, "color: #e5e4e2"]
+        ["Bajo",{{$porcentajeBajo}}, "#b87333"],
+        ["Basico",{{$porcentajeBasico}}, "silver"],
+        ["Alto",{{$porcentajeAlto}}, "gold"],
+        ["Superior",{{$porcentajeSuperior}}, "color: #e5e4e2"]
       ]);
 
       var view = new google.visualization.DataView(data);

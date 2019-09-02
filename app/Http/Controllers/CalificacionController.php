@@ -8,6 +8,7 @@ use App\Asignatura;
 use App\Calificacion;
 use App\Grado;
 use App\Seccion;
+use App\cantidadNivelesGrado;
 
 class CalificacionController extends Controller
 {
@@ -16,6 +17,12 @@ class CalificacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    function __construct()
+    {
+        $this->middleware(['auth','roles']);
+    }
+
     public function index()
     {
         $asignaturas = Asignatura::all()->toArray();
@@ -100,6 +107,17 @@ class CalificacionController extends Controller
         ->asignatura($asignatura)
         ->get();
 
+        $conteo = 0;
+        foreach($calificaciones as $c)
+        {
+            $conteo++;
+        }
+
+        $cantidadNiveles = cantidadNivelesGrado::orderBy('id','ASC')
+        ->grado($grado)
+        ->asignatura($asignatura)
+        ->first();
+
         foreach($calificaciones as $t)
         {
             $b = $t->Bajo;
@@ -113,8 +131,21 @@ class CalificacionController extends Controller
             $superior = $superior + $sup;
         }
 
-        return view ('Calificaciones.show', compact('bajo','basico','alto','superior','nombreGrado','nombreAsignatura','nombreSeccion'));
 
+        $totalBj = $cantidadNiveles->cBajo * $conteo;
+        $totalBa = $cantidadNiveles->cBasico * $conteo;
+        $totalAl = $cantidadNiveles->cAlto * $conteo;
+        $totalSp = $cantidadNiveles->cSuperior * $conteo;
+
+        $porcentajeBajo = ($bajo * 100) / $totalBj;
+        $porcentajeBasico = ($basico * 100) / $totalBa;
+        $porcentajeAlto = ($alto * 100) / $totalAl;
+        $porcentajeSuperior = ($superior * 100) / $totalSp;
+
+
+        return view ('Calificaciones.show', compact('porcentajeBajo','porcentajeBasico','porcentajeAlto','porcentajeSuperior','nombreGrado','nombreAsignatura','nombreSeccion'));
+
+      
     }
 
     public function report()

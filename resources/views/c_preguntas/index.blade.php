@@ -52,6 +52,10 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label>Numero de estudiante asistente</label>
+                            <input id="numeroAsistencia" name="numeroAsistencia" type="text" class="form-control">
+                        </div>
 
 
                         <div class="form-group" hidden>

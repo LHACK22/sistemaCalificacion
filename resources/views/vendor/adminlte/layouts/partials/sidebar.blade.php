@@ -36,8 +36,10 @@
             <li class="active"><a href="{{ url('home') }}"><i class='fa fa-home'></i> <span>Inicio</span></a></li>
             <li><a href="/Calificaciones"><i class='fa fa-server'></i> <span>Registrar Califi.. Niveles</span></a></li>
             <li><a href="/CalificacionesPregunta"><i class='fa  fa-book'></i> <span>Registrar Califi.. Preguntas</span></a></li>
+            @if(auth()->user()->role === 'admin')
             <li><a href="/report"><i class='fa fa-line-chart'></i> <span>Reporte Niveles</span></a></li>
             <li><a href="/reportPregunta"><i class='fa fa-bar-chart'></i> <span>Reporte Preguntas</span></a></li>
+            @endif          
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

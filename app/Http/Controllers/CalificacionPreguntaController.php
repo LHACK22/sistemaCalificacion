@@ -9,6 +9,7 @@ use App\totalCalificacionPregunta;
 use App\Grado;
 use App\Seccion;
 use App\Pregunta;
+use App\asistenciaCurso;
 
 class CalificacionPreguntaController extends Controller
 {
@@ -17,6 +18,12 @@ class CalificacionPreguntaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    function __construct()
+    {
+        $this->middleware(['auth','roles']);
+    }
+
     public function index()
     {
         $asignaturas = Asignatura::all()->toArray();
@@ -96,6 +103,15 @@ class CalificacionPreguntaController extends Controller
 
         }
 
+        $asistencia = new asistenciaCurso([
+            'idGrado' => $request->get('grado'),
+            'idCurso' => $request->get('curso'),
+            'idAsignatura' => $request->get('asignatura'),
+            'cantidad' => $request->get('numeroAsistencia')
+        ]);
+
+        $asistencia->save();
+
         return redirect('/CalificacionesPregunta');
 
     }
@@ -132,7 +148,15 @@ class CalificacionPreguntaController extends Controller
         ->asignatura($asignatura)
         ->get();
 
-        return view ('c_preguntas.show', compact('calificacionesPregunta','nombreSeccion','nombreGrado','nombreAsignatura'));
+        $asistencia = asistenciaCurso::orderBy('id','ASC')
+        ->grado($grado)
+        ->curso($seccion)
+        ->asignatura($asignatura)
+        ->first();
+
+        $nA = $asistencia->cantidad;
+
+        return view ('c_preguntas.show', compact('nA','calificacionesPregunta','nombreSeccion','nombreGrado','nombreAsignatura'));
         
         }
         else
@@ -149,7 +173,18 @@ class CalificacionPreguntaController extends Controller
         ->asignatura($asignatura)
         ->get();
 
-        return view ('c_preguntas.show', compact('calificacionesPregunta','nombreGrado','nombreAsignatura','nombreSeccion'));
+        $asistencia = asistenciaCurso::orderBy('id','ASC')
+        ->grado($grado)
+        ->asignatura($asignatura)
+        ->get();
+
+        $nA = 0;
+        foreach($asistencia as $a)
+        {
+            $nA = $nA + $a->cantidad;
+        }
+
+        return view ('c_preguntas.show', compact('nA','calificacionesPregunta','nombreGrado','nombreAsignatura','nombreSeccion'));
         // return $calificacionesPregunta;
         }
      
